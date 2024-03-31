@@ -1,2 +1,4 @@
-psycopg2==2.7.2
-airflow
+psycopg2
+pandas
+langchain
+
