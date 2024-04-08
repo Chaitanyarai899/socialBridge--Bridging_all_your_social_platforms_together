@@ -1,27 +1,33 @@
 version: '3'
 services:
-  postgres:
-    image: postgres:latest
+  airflow-webserver:
+    image: apache/airflow:2.3.0-python3.10
+    command: webserver
     environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: leetcode_stats
-    ports:
-      - "5432:5432"
-  
-  airflow:
-    image: apache/airflow:latest
-    depends_on:
-      - postgres
-    environment:
-      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/leetcode_stats
-      AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW_UID: "1000"
-    ports:
-      - "8080:8080"
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://admin:gSyOrnLn2bF9uX5Kw0WV85AIokPfKh6c@dpg-co4keh779t8c7393go9g-a.singapore-postgres.render.com/userstats
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__WEBSERVER__SECRET_KEY=secret_key_here
+      - AIRFLOW_UID=${UID:-50000}
+      - AIRFLOW_GID=0
     volumes:
       - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
-      # Temporarily commented out to allow Airflow to set up logs directory
-      # - ./logs:/opt/airflow/logs
-    user: "${UID:-1000}:${GID:-0}"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - airflow-scheduler
+
+  airflow-scheduler:
+    image: apache/airflow:2.3.0
+    command: scheduler
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://admin:gSyOrnLn2bF9uX5Kw0WV85AIokPfKh6c@dpg-co4keh779t8c7393go9g-a.singapore-postgres.render.com/userstats
+      - AIRFLOW_UID=${UID:-50000}
+      - AIRFLOW_GID=0
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins

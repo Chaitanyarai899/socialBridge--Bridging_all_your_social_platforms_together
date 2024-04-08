@@ -1,17 +1,5 @@
-FROM python:3.9.1-alpine
+# Extend from the official Airflow image
+FROM apache/airflow:2.6.3-python3.10
 
-RUN apk update \
-  && apk add \
-    build-base \
-    postgresql \
-    postgresql-dev \
-    libpq
-
-RUN mkdir /app
-WORKDIR /app
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
-
-ENV PYTHONUNBUFFERED 1
-
-COPY . .
+# Install python-dotenv or any other dependencies
+RUN pip install psycopg2-binary python-dotenv
