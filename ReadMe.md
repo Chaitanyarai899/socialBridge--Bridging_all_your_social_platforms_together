@@ -32,9 +32,7 @@ Through this project, I hope to demonstrate my growing skills and knowledge in s
 
 9. AWS (ec2, S3, RDS) + Docker + Github Actions :- for cloud services and ci/cd pipeline.
 
-### Current Progress:
-![image](https://github.com/Chaitanyarai899/socialBridge---Bridging-all-your-social-platforms-together/assets/95732261/3458acac-84f4-4439-8ba2-6c1d2fecc512)
-System Diagram:
+### System Diagram:
 ![image](https://github.com/Chaitanyarai899/socialBridge--Bridging_all_your_social_platforms_together/assets/95732261/35f9a079-c404-4d01-9901-e3541e0dcfd3)
 
 
