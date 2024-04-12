@@ -20,7 +20,7 @@ services:
       - airflow-scheduler
 
   airflow-scheduler:
-    image: apache/airflow:2.3.0
+    image: apache/airflow:2.3.0-python3.10
     command: scheduler
     environment:
       - AIRFLOW__CORE__EXECUTOR=LocalExecutor
