@@ -81,11 +81,11 @@ class LeetCodeStatsPipeline:
             dag = self.dag,
         )
 
-        # Define dependencies
-        fetch_tag_task >> insert_into_postgreSQL
-        fetch_calendar_task >> insert_into_postgreSQL
-        fetch_submissions_task >> insert_into_postgreSQL
-        fetch_solved_task >> insert_into_postgreSQL
+        # defining dependencies
+        fetch_tag_task >> insert_stats_task
+        fetch_calendar_task >> insert_stats_task
+        fetch_submissions_task >> insert_stats_task
+        fetch_solved_task >> insert_stats_task
         insert_stats_task >> insert_into_postgreSQL
 
     def get_dag(self):

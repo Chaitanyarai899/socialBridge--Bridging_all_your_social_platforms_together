@@ -16,6 +16,7 @@ services:
       - ./plugins:/opt/airflow/plugins
     ports:
       - "8080:8080"
+      - "8793:8793"
     depends_on:
       - airflow-scheduler
 
